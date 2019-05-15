@@ -14,7 +14,7 @@
     "eject": "react-scripts eject",
     "features": "jest -c jest.config.js",
     "cy:run": "cypress run",
-    "cy:open": "cypress open"
+    "cy:open": "yarn start --silent & cypress open"
   },
   "eslintConfig": {
     "extends": "react-app"
