@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import CooperCalculator from '../Modules/CooperCalculator';
 import { saveData } from '../Modules/PerformanceData';
 
-
 class DisplayCooperResult extends Component {
-
   calculate() {
-    return CooperCalculator(this.props.distance, this.props.gender, this.props.age);
+    return CooperCalculator(
+      this.props.distance, 
+      this.props.gender, 
+      this.props.age);
   }
 
   async saveCooperData() {
@@ -29,7 +30,14 @@ class DisplayCooperResult extends Component {
           <button id="save-result" onClick={this.saveCooperData.bind(this)}>Save entry</button>
         </>
       )
+    } else if (this.props.authenticated === true && this.props.entrySaved === true) {
+      saveButton = (
+        <>
+          <p>Your entry was saved</p>
+        </>
+      )
     }
+
     if (this.props.age !== '' && this.props.distance !== '') {
         results = (
           <>

@@ -42,4 +42,3 @@ beforeEach(function() {
     cy.get('#save-result').click()
     cy.contains('Your entry was saved')
   })
-})
