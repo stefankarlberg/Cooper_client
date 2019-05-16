@@ -37,7 +37,7 @@ class App extends Component {
   }
 
   render() {
-    let renderLogin
+    let renderLogin;
     let user;
 
     if (this.state.authenticated === true) {
@@ -75,7 +75,7 @@ class App extends Component {
           gender={this.state.gender}
           age={this.state.age}
         />
-       
+      
         {renderLogin}
 
       </div>
