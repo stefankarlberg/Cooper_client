@@ -24,7 +24,7 @@ class DisplayCooperResult extends Component {
     let results;
     let saveButton;
   
-    if (this.props.authenticated === true) {
+    if (this.props.authenticated === true && this.props.entrySaved === false) {
       saveButton = (
         <>
           <button id="save-result" onClick={this.saveCooperData.bind(this)}>Save entry</button>

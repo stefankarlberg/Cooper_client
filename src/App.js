@@ -4,6 +4,7 @@ import InputFields from "./Components/InputFields";
 import LoginForm from './Components/LoginForm';
 import { authenticate } from './Modules/Auth';
 
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -19,16 +20,11 @@ class App extends Component {
       entrySaved: false
     }
   }
-  
-  entryHandler() {
-    this.setState({ entrySaved: true });
-  }
-
   onChange(event) {
     this.setState({
       [event.target.id]: event.target.value,
       entrySaved: false
-    });
+    })
   }
 
   async onLogin(e) {
@@ -39,6 +35,10 @@ class App extends Component {
     } else {
       this.setState({ message: resp.message, renderLoginForm: false })
     }
+  }
+
+  entryHandler() {
+    this.setState({ entrySaved: true });
   }
 
   render() {
