@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import DisplayCooperResult from './Components/DisplayCooperResult';
-import InputFields from "./Components/InputFields";
+import InputFields from './Components/InputFields';
 import LoginForm from './Components/LoginForm';
 import { authenticate } from './Modules/Auth';
+import DisplayPerformanceData from './Components/DisplayPerformanceData';
 
 
 class App extends Component {
@@ -39,8 +40,13 @@ class App extends Component {
   }
 
   entryHandler() {
-    this.setState({ entrySaved: true });
+    this.setState({ entrySaved: true, updateIndex: true });
   }
+
+  indexUpdated() {
+  this.setState({ updateIndex: false });
+  }
+
 
   render() {
     let renderLogin;
@@ -52,9 +58,23 @@ class App extends Component {
       renderLogin = (
         <p>Hi {user}</p>
       )
+    
+    if (this.state.renderIndex === true) {
       performanceDataIndex = (
-        <button id="show-index" onClick={() => this.setState({ renderIndex: true })}>Show past entries</button>
-      )
+        <>
+          <DisplayPerformanceData
+            updateIndex={this.state.updateIndex}
+            indexUpdated={this.indexUpdated.bind(this)}
+          />
+            <button onClick={() => this.setState({ renderIndex: false })}>Hide past entries</button>
+          </>
+        )
+    
+      } else {
+        performanceDataIndex = (
+          <button id="show-index" onClick={() => this.setState({ renderIndex: true })}>Show past entries</button>
+        )
+      }
       
     } else {
       if (this.state.renderLoginForm === true) {
