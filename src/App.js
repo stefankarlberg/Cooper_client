@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import DisplayCooperResult from './Components/DisplayCooperResult';
 import InputFields from './Components/InputFields';
 import LoginForm from './Components/LoginForm';
+import SignupForm from './Components/SignupForm';
 import { authenticate } from './Modules/Auth';
 import DisplayPerformanceData from './Components/DisplayPerformanceData';
 
@@ -14,15 +15,16 @@ class App extends Component {
       gender: 'female',
       age: '',
       renderLoginForm: false,
+      renderSignupForm: false,
       authenticated: false,
       email: '',
       password: '',
       message: '',
       entrySaved: false,
-      renderIndex: false,
-      renderSignupForm: false
+      renderIndex: false
     }
   }
+  
   onChange(event) {
     this.setState({
       [event.target.id]: event.target.value,
@@ -53,6 +55,7 @@ class App extends Component {
     let renderLogin;
     let user;
     let performanceDataIndex;
+    let renderSignup;
 
     if (this.state.authenticated === true) {
       user = JSON.parse(sessionStorage.getItem('credentials')).uid;
@@ -88,9 +91,30 @@ class App extends Component {
           </>
         )
       } else {
+        console.log(this.state.renderSignupForm)
+        if (this.state.renderSignupForm === true) {
+          renderSignup = (
+            <>
+           
+              <SignupForm 
+                // signupHandler={this.onSignup.bind(this)}
+                // inputChangeHandler={this.onChange.bind(this)}
+                // status={this.onChange.bind(this)}
+              />
+            </>
+          )
+        }
+
         renderLogin = (
           <>
             <button id="login" onClick={() => this.setState({ renderLoginForm: true })}>Login</button>
+            <p>{this.state.message}</p>
+          </>
+        )
+
+        renderSignup = (
+          <>
+            <button id="signup" onClick={() => this.setState({ renderSignupForm: true })}>Register</button>
             <p>{this.state.message}</p>
           </>
         )
@@ -111,11 +135,13 @@ class App extends Component {
         />  
         
         {renderLogin}
+        {renderSignup}
         {performanceDataIndex}
 
       </div>
     );
   }
 }
+
 
 export default App;
