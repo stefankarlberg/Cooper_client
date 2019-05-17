@@ -42,6 +42,16 @@ class App extends Component {
     }
   }
 
+  // async onSignup(e) {
+  //   e.preventDefault();
+  //   let resp = await authenticate(this.state.email, this.state.password)
+  //   if (resp.authenticated === true) {
+  //     this.setState({ authenticated: true });
+  //   } else {
+  //     this.setState({ message: resp.message, renderSignupForm: false })
+  //   }
+  // }
+
   entryHandler() {
     this.setState({ entrySaved: true, updateIndex: true });
   }
@@ -70,7 +80,7 @@ class App extends Component {
             updateIndex={this.state.updateIndex}
             indexUpdated={this.indexUpdated.bind(this)}
           />
-            <button onClick={() => this.setState({ renderIndex: false })}>Hide past entries</button>
+          <button onClick={() => this.setState({ renderIndex: false })}>Hide past entries</button>
           </>
         )
     
@@ -91,20 +101,6 @@ class App extends Component {
           </>
         )
       } else {
-        console.log(this.state.renderSignupForm)
-        if (this.state.renderSignupForm === true) {
-          renderSignup = (
-            <>
-           
-              <SignupForm 
-                // signupHandler={this.onSignup.bind(this)}
-                // inputChangeHandler={this.onChange.bind(this)}
-                // status={this.onChange.bind(this)}
-              />
-            </>
-          )
-        }
-
         renderLogin = (
           <>
             <button id="login" onClick={() => this.setState({ renderLoginForm: true })}>Login</button>
@@ -112,14 +108,27 @@ class App extends Component {
           </>
         )
 
-        renderSignup = (
+      } 
+      if (this.state.renderSignupForm === true) {
+          renderSignup = (
+            <>
+            { console.log('woff woff') }
+            <SignupForm
+            inputChangeHandler={this.onChange.bind(this)}
+            />
+            
+            </>
+          )
+        } else {
+          renderSignup = (
           <>
             <button id="signup" onClick={() => this.setState({ renderSignupForm: true })}>Register</button>
             <p>{this.state.message}</p>
           </>
-        )
+        )       
       }
     }
+    console.log(renderSignup)
     return (
       <div>
         <InputFields 
