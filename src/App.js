@@ -19,7 +19,8 @@ class App extends Component {
       password: '',
       message: '',
       entrySaved: false,
-      renderIndex: false
+      renderIndex: false,
+      renderSignupForm: false
     }
   }
   onChange(event) {
@@ -108,7 +109,7 @@ class App extends Component {
           entrySaved={this.state.entrySaved}
           entryHandler={this.entryHandler.bind(this)}
         />  
-            
+        
         {renderLogin}
         {performanceDataIndex}
 
