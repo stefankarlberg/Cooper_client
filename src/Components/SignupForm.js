@@ -12,7 +12,11 @@ const SignupForm = (props) => {
         <label>Password</label>
         <input id="password" onChange={props.inputChangeHandler}></input>
       </div>
-      <button onClick={(e) => props.loginHandler(e)} id="submit">Submit</button>
+      <div>
+        <label>Password Confirmation</label>
+        <input id="password_confirmation" onChange={props.inputChangeHandler}></input>
+      </div>
+      <button onClick={(e) => props.signupHandler(e)} id="submit">Submit</button>
     </form>
   )
 }

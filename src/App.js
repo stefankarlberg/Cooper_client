@@ -4,6 +4,7 @@ import InputFields from './Components/InputFields';
 import LoginForm from './Components/LoginForm';
 import SignupForm from './Components/SignupForm';
 import { authenticate } from './Modules/Auth';
+import { register } from './Modules/Auth';
 import DisplayPerformanceData from './Components/DisplayPerformanceData';
 
 
@@ -19,6 +20,7 @@ class App extends Component {
       authenticated: false,
       email: '',
       password: '',
+      password_confirmation: '',
       message: '',
       entrySaved: false,
       renderIndex: false
@@ -42,15 +44,15 @@ class App extends Component {
     }
   }
 
-  // async onSignup(e) {
-  //   e.preventDefault();
-  //   let resp = await authenticate(this.state.email, this.state.password)
-  //   if (resp.authenticated === true) {
-  //     this.setState({ authenticated: true });
-  //   } else {
-  //     this.setState({ message: resp.message, renderSignupForm: false })
-  //   }
-  // }
+  async onSignup(e) {
+    e.preventDefault();
+    let resp = await register(this.state.email, this.state.password, this.state.password_confirmation)
+    if (resp.authenticated === true) {
+      this.setState({ authenticated: true });
+    } else {
+      this.setState({ message: resp.message, renderSignupForm: false })
+    }
+  }
 
   entryHandler() {
     this.setState({ entrySaved: true, updateIndex: true });
@@ -112,9 +114,9 @@ class App extends Component {
       if (this.state.renderSignupForm === true) {
           renderSignup = (
             <>
-            { console.log('woff woff') }
             <SignupForm
             inputChangeHandler={this.onChange.bind(this)}
+            signupHandler={this.onSignup.bind(this)}
             />
             
             </>
