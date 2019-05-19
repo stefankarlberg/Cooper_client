@@ -6,6 +6,7 @@ import SignupForm from './Components/SignupForm';
 import { authenticate } from './Modules/Auth';
 import { register } from './Modules/Auth';
 import DisplayPerformanceData from './Components/DisplayPerformanceData';
+import 'semantic-ui-css/semantic.min.css';
 
 
 class App extends Component {
@@ -16,6 +17,7 @@ class App extends Component {
       gender: 'female',
       age: '',
       renderLoginForm: false,
+      renderInputFields: false,
       renderSignupForm: false,
       authenticated: false,
       email: '',
@@ -63,79 +65,132 @@ class App extends Component {
   }
 
 
+
+
   render() {
-    let renderLogin;
+    let renderMenuItemShowPastEntries;
+    let renderMenuItemShowInputFields;
+    let renderMenuItemLogin;
+    let renderMenuItemSignup;
+    let renderMenuItemWelcome
+    let renderInputFields
+    let renderMenuItemLogout
+    let renderWelcomeUser
+    let renderLogin
+    let renderLoginForm;
     let user;
     let performanceDataIndex;
     let renderSignup;
 
-    if (this.state.authenticated === true) {
-      user = JSON.parse(sessionStorage.getItem('credentials')).uid;
-      renderLogin = (
-        <p>Hi {user}</p>
-      )
     
-    if (this.state.renderIndex === true) {
-      performanceDataIndex = (
-        <>
-          <DisplayPerformanceData
-            updateIndex={this.state.updateIndex}
-            indexUpdated={this.indexUpdated.bind(this)}
-          />
-          <button onClick={() => this.setState({ renderIndex: false })}>Hide past entries</button>
-          </>
-        )
-    
-      } else {
-        performanceDataIndex = (
-          <button id="show-index" onClick={() => this.setState({ renderIndex: true })}>Show past entries</button>
-        )
-      }
-      
-    } else {
-      if (this.state.renderLoginForm === true) {
-        renderLogin = (
-          <>
-            <LoginForm 
-              loginHandler={this.onLogin.bind(this)}
-              inputChangeHandler={this.onChange.bind(this)}
-            />
-          </>
-        )
-      } else {
-        renderLogin = (
-          <>
-            <button id="login" onClick={() => this.setState({ renderLoginForm: true })}>Login</button>
-            <p>{this.state.message}</p>
-          </>
-        )
 
-      } 
-      if (this.state.renderSignupForm === true) {
-          renderSignup = (
-            <>
-            <SignupForm
-            inputChangeHandler={this.onChange.bind(this)}
-            signupHandler={this.onSignup.bind(this)}
-            />
-            
-            </>
-          )
-        } else {
-          renderSignup = (
-          <>
-            <button id="signup" onClick={() => this.setState({ renderSignupForm: true })}>Register</button>
-            <p>{this.state.message}</p>
-          </>
-        )       
-      }
-    }
-    console.log(renderSignup)
-    return (
-      <div>
-        <InputFields 
+
+  renderMenuItemShowInputFields= (
+    <a class="ui item" onClick={() => this.setState({ renderIndex: false, renderInputFields: true, renderSignupForm: false, renderLoginForm: false })}>
+    Cooper Test
+    </a>
+    )
+
+  renderMenuItemShowPastEntries= (
+    <a class="ui item" onClick={() => this.setState({ renderIndex: true, renderInputFields: false, renderSignupForm: false, renderLoginForm: false })}>
+    Statistics
+    </a>
+  )
+
+  renderMenuItemLogin = (
+    <a class="ui item" onClick={() => this.setState({ renderIndex: false, renderInputFields: false, renderLoginForm: true, renderSignupForm: false})}>
+    Sign in
+    </a>
+  )
+
+  renderMenuItemSignup= (
+    <a class="ui item" onClick={() => this.setState({ renderIndex: false, renderInputFields: false, renderSignupForm: true, renderLoginForm: false })}>
+    Register
+    </a>
+  )
+
+  renderMenuItemLogout= (
+    <a class="ui item" onClick={() => this.setState({ authenticated: false, renderIndex: false, renderInputFields: false, renderSignupForm: true, renderLoginForm: false })}>
+    Log out
+    </a>
+  )
+
+  user = JSON.parse(sessionStorage.getItem('credentials')).uid
+  renderWelcomeUser= (
+    <p class="ui item">
+     Hi {user}
+    </p>
+  )
+ 
+  if (this.state.renderIndex === true) {
+    performanceDataIndex = (
+        <DisplayPerformanceData
+          updateIndex={this.state.updateIndex}
+          indexUpdated={this.indexUpdated.bind(this)}
+        />
+      )
+  }
+
+  // Log in
+  if (this.state.authenticated === false && this.state.renderLoginForm === true) {
+    renderLoginForm = (
+      <>
+        <LoginForm 
+          loginHandler={this.onLogin.bind(this)}
           inputChangeHandler={this.onChange.bind(this)}
         />
+      </>
+    )
+  } 
+
+   // Input fields
+   if (this.state.renderInputFields === true) {
+    renderInputFields = (
+      <InputFields 
+      inputChangeHandler={this.onChange.bind(this)}
+      />
+      )
+    } 
+
+    // Sign up
+  if (this.state.renderSignupForm === true) {
+      renderSignup = (
+        <SignupForm
+        inputChangeHandler={this.onChange.bind(this)}
+        signupHandler={this.onSignup.bind(this)}
+        />
+      )
+    } 
+    
+  
+
+    return (
+      <div class="ui raised very padded text container segment craft_top">
+          <div>
+      <div class="ui secondary pointing menu craft_bottom">
+      <a class="active item">
+        Home
+      </a>
+      { renderMenuItemShowInputFields }
+      { this.state.authenticated ? renderMenuItemShowPastEntries : null }
+    
+      <div class="right menu">
+     
+     
+      { this.state.authenticated ? renderWelcomeUser : null }
+      { this.state.authenticated ? null : renderMenuItemWelcome }
+      { this.state.authenticated ? null : renderMenuItemLogin }
+      { this.state.authenticated ? null : renderMenuItemSignup }
+      { this.state.authenticated ? renderMenuItemLogout : null }
+      </div>
+    </div>
+
+    </div>
+      <div>
+        {renderInputFields}
+        {renderLoginForm}
+        {renderSignup}
+        {performanceDataIndex}
         <DisplayCooperResult
           distance={this.state.distance}
           gender={this.state.gender}
@@ -144,11 +199,9 @@ class App extends Component {
           entrySaved={this.state.entrySaved}
           entryHandler={this.entryHandler.bind(this)}
         />  
-        
-        {renderLogin}
-        {renderSignup}
-        {performanceDataIndex}
+       
 
+      </div>
       </div>
     );
   }

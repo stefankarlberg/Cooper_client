@@ -5,9 +5,23 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: url('https://image.freepik.com/free-photo/close-up-woman-running-with-unfocused-background_23-2147600468.jpg?11') no-repeat center center fixed !important; 
+  -webkit-background-size: cover !important;
+  -moz-background-size: cover !important;
+  -o-background-size: cover !important;
+  background-size: cover !important;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.craft_bottom {
+  margin-bottom:40px !important;
+}
+
+.craft_top {
+  margin-top:5% !important;
+}
+
