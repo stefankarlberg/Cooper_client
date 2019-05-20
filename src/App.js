@@ -39,21 +39,21 @@ class App extends Component {
   async onLogin(e) {
     e.preventDefault();
     let resp = await authenticate(this.state.email, this.state.password)
-    if (resp.authenticated === true) {
-      this.setState({ authenticated: true });
-    } else {
-      this.setState({ message: resp.message, renderLoginForm: false })
-    }
+      if (resp.authenticated === true) {
+        this.setState({ authenticated: true });
+      } else {
+        this.setState({ message: resp.message, renderLoginForm: false })
+      }
   }
 
   async onSignup(e) {
     e.preventDefault();
     let resp = await register(this.state.email, this.state.password, this.state.password_confirmation)
-    if (resp.authenticated === true) {
-      this.setState({ authenticated: true });
-    } else {
-      this.setState({ message: resp.message, renderSignupForm: false })
-    }
+      if (resp.authenticated === true) {
+        this.setState({ authenticated: true });
+      } else {
+        this.setState({ message: resp.message, renderSignupForm: false })
+      }
   }
 
   entryHandler() {
@@ -81,12 +81,14 @@ class App extends Component {
     let user;
     let performanceDataIndex;
     let renderSignup;
+    let renderLogout
+    let message
 
     
 
 
   renderMenuItemShowInputFields= (
-    <a class="ui item" onClick={() => this.setState({ renderIndex: false, renderInputFields: true, renderSignupForm: false, renderLoginForm: false })}>
+    <a id="cooper" class="ui item" onClick={() => this.setState({ renderIndex: false, renderInputFields: true, renderSignupForm: false, renderLoginForm: false })}>
     Cooper Test
     </a>
     )
@@ -98,13 +100,13 @@ class App extends Component {
   )
 
   renderMenuItemLogin = (
-    <a class="ui item" onClick={() => this.setState({ renderIndex: false, renderInputFields: false, renderLoginForm: true, renderSignupForm: false})}>
+    <a id = "login" class="ui item" onClick={() => this.setState({ renderIndex: false, renderInputFields: false, renderLoginForm: true, renderSignupForm: false})}>
     Sign in
     </a>
   )
 
   renderMenuItemSignup= (
-    <a class="ui item" onClick={() => this.setState({ renderIndex: false, renderInputFields: false, renderSignupForm: true, renderLoginForm: false })}>
+    <a id = "signup" class="ui item" onClick={() => this.setState({ renderIndex: false, renderInputFields: false, renderSignupForm: true, renderLoginForm: false })}>
     Register
     </a>
   )
@@ -115,19 +117,23 @@ class App extends Component {
     </a>
   )
 
+  if (this.state.authenticated === true) {
   user = JSON.parse(sessionStorage.getItem('credentials')).uid
   renderWelcomeUser= (
     <p class="ui item">
      Hi {user}
     </p>
-  )
+  )}
  
   if (this.state.renderIndex === true) {
     performanceDataIndex = (
-        <DisplayPerformanceData
-          updateIndex={this.state.updateIndex}
-          indexUpdated={this.indexUpdated.bind(this)}
-        />
+      <>
+      <DisplayPerformanceData
+        updateIndex={this.state.updateIndex}
+        indexUpdated={this.indexUpdated.bind(this)}
+      />
+      {/* <button onClick={() => this.setState({ renderIndex: false })}>Hide past entries</button> */}
+    </>
       )
   }
 
@@ -146,9 +152,9 @@ class App extends Component {
    // Input fields
    if (this.state.renderInputFields === true) {
     renderInputFields = (
-      <InputFields 
-      inputChangeHandler={this.onChange.bind(this)}
-      />
+        <InputFields 
+        inputChangeHandler={this.onChange.bind(this)}
+        />
       )
     } 
 
@@ -160,7 +166,12 @@ class App extends Component {
         signupHandler={this.onSignup.bind(this)}
         />
       )
-    } 
+    } else {
+      message = (
+        this.state.message
+      )
+      this.state.message = ''
+    }
     
   
 
@@ -187,6 +198,7 @@ class App extends Component {
 
     </div>
       <div>
+        {message}
         {renderInputFields}
         {renderLoginForm}
         {renderSignup}

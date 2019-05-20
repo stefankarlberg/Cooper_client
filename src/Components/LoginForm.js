@@ -2,7 +2,7 @@ import React from 'react';
 
 const LoginForm = (props) => {
   return (
-    <form class="ui form" >
+    <form id = "login-form" class="ui form" >
       <div>
         <h1 class="ui header">Sign in</h1>
         <p>Please sign in with your e-mail and password.</p>

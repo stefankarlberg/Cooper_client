@@ -25,6 +25,7 @@ describe('User can log in', () => {
   })
 
   it('successfully', () => {
+    cy.get('#cooper').click()
     cy.get('input[id="distance"]').type('1000')
     cy.get('select[id="gender"]').select('female')
     cy.get('input[id="age"]').type('23')
@@ -33,6 +34,7 @@ describe('User can log in', () => {
   })
 
   it('can save two different entries', () => {
+    cy.get('#cooper').click()
     cy.get('input[id="distance"]').type('1000')
     cy.get('select[id="gender"]').select('female')
     cy.get('input[id="age"]').type('23')

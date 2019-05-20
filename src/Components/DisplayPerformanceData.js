@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { getData } from '../Modules/PerformanceData';
 import { Line } from 'react-chartjs-2';
+import moment from 'moment';
 
 class DisplayPerformanceData extends Component {
   constructor(props) {
@@ -39,8 +40,12 @@ class DisplayPerformanceData extends Component {
         <div>
           {this.state.performanceData.map(item => {
             distances.push(item.data.distance)
-            // console.log(this.state.performanceData)
-            date.push(item.created_at)
+            // console.log(item.data.created_at)
+            var dateString = item.created_at;
+            var dateObj = new Date(dateString);
+            var momentObj = moment(dateObj)
+            var momentString = momentObj.format('YYYY-MM-DD');
+            date.push(momentString)
           })}
         </div>
       )
@@ -85,8 +90,8 @@ class DisplayPerformanceData extends Component {
 
     return (
       <div>
-        {dataIndex}
         <Line data={data} />
+        {dataIndex}
       </div>
     )
   }      
