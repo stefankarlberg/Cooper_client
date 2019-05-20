@@ -94,7 +94,7 @@ class App extends Component {
     )
 
   renderMenuItemShowPastEntries= (
-    <a class="ui item" onClick={() => this.setState({ renderIndex: true, renderInputFields: false, renderSignupForm: false, renderLoginForm: false })}>
+    <a d="stat" class="ui item" onClick={() => this.setState({ renderIndex: true, renderInputFields: false, renderSignupForm: false, renderLoginForm: false })}>
     Statistics
     </a>
   )

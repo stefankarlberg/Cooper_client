@@ -21,10 +21,12 @@ describe('User attempts to view his/her performance data', () => {
       cy.get('#email').type('user@mail.com')
       cy.get('#password').type('password')
       cy.get('button').click()
+    
     })
   });
 
   it('successfully', async () => {
+    cy.get('[d="stat"]').click();
     cy.get('button[id="show-index"]').click()
     cy.contains('Below Average')
     cy.contains('Average')
